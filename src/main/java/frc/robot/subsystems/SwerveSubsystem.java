@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -29,6 +28,7 @@ public class SwerveSubsystem extends SubsystemBase {
     private AHRS navx;
 
     private SwerveDriveOdometry odometry;
+
     private SwerveModulePosition flModulePosition;
     private SwerveModulePosition frModulePosition;
     private SwerveModulePosition blModulePosition;
@@ -65,7 +65,7 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveModulePositions[2] = blModulePosition;
         swerveModulePositions[3] = brModulePosition;
 
-        odometry = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, getRotation2d(), swerveModulePositions);
+        odometry = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, new Rotation2d(0), swerveModulePositions);
 
         /* * * Landing Gear * * */
         landinator = new DoubleSolenoid(PneumaticsModuleType.REVPH,
