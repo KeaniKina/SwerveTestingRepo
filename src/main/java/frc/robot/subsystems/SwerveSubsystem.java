@@ -55,16 +55,20 @@ public class SwerveSubsystem extends SubsystemBase {
         navx = new AHRS(SPI.Port.kMXP);
 
         /* * * Keani's Swerve Auto Testing * * */
+
+        // get the individual module positions
         flModulePosition = frontLeft.getModulePosition(frontLeft.getDrivePosition(), getRotation2d());
         frModulePosition = frontRight.getModulePosition(frontRight.getDrivePosition(), getRotation2d());
         blModulePosition = backLeft.getModulePosition(backLeft.getDrivePosition(), getRotation2d());
         brModulePosition = backRight.getModulePosition(backRight.getDrivePosition(), getRotation2d());
 
+        // add each module position into an array in the same order they are instantiated
         swerveModulePositions[0] = flModulePosition;
-        swerveModulePositions[1] = frModulePosition;
-        swerveModulePositions[2] = blModulePosition;
+        swerveModulePositions[1] = blModulePosition;
+        swerveModulePositions[2] = frModulePosition;
         swerveModulePositions[3] = brModulePosition;
 
+        // instantiate an odometer object with a new rotation2d obj, swerve module positions
         odometer = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, new Rotation2d(0), swerveModulePositions);
 
         /* * * Landing Gear * * */
@@ -243,7 +247,6 @@ public class SwerveSubsystem extends SubsystemBase {
         wheelinator.set(rspeed);
     }
 
-
     // PERIODIC - runs repeatedly (like periodic from timed robot)
     @Override
     public void periodic() {
@@ -251,7 +254,7 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("[S] Pitch", getPitch());
         SmartDashboard.putNumber("[S] Timer Class", Timer.getMatchTime());
 
-        // this should update the odometer??!?!?!?!
+        // this should update the odometer's rotation and module positions!??!?!?!?!
         odometer.update(getRotation2d(), swerveModulePositions);
     }
 }
