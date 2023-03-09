@@ -110,7 +110,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     //return autoChooser.getSelected();
 
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConsts.DRIVE_TRANSLATION_SPEED, 0.5).setKinematics(SwerveConsts.DRIVE_KINEMATICS);
+    // FIXME work on max accel, not final
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConsts.DRIVE_TRANSLATION_SPEED, AutoConsts.DRIVE_MAX_ACCELERATION).setKinematics(SwerveConsts.DRIVE_KINEMATICS);
 
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
       new Pose2d(0, 0, new Rotation2d(0)),

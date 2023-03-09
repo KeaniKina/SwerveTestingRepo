@@ -67,8 +67,8 @@ public class SwerveSubsystem extends SubsystemBase {
         // add each module position into an array in the same order they are instantiated
         swerveModulePositions[0] = flModulePosition;
         swerveModulePositions[1] = blModulePosition;
-        swerveModulePositions[2] = frModulePosition;
-        swerveModulePositions[3] = brModulePosition;
+        swerveModulePositions[2] = brModulePosition;
+        swerveModulePositions[3] = frModulePosition;
 
         // instantiate an odometer object with a new rotation2d obj, swerve module positions
         odometer = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, new Rotation2d(0), swerveModulePositions);
