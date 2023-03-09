@@ -14,6 +14,8 @@ import frc.robot.subsystems.*;
 
 import java.util.List;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -27,6 +29,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -122,7 +126,18 @@ public class RobotContainer {
       new Pose2d(2, 0, new Rotation2d(0)),
       trajectoryConfig);
 
-    return null;
+      // FIXME p values on PID controllers
+      PIDController xController = new PIDController(0, 0, 0);
+      PIDController yController = new PIDController(0, 0, 0);
+      ProfiledPIDController thetaController = new ProfiledPIDController(0, 0, 0, null);
+
+      SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(trajectory, swerveSubsystem::getPose, SwerveConsts.DRIVE_KINEMATICS, xController, yController, thetaController, swerveSubsystem::setModuleStates, swerveSubsystem);
+
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> swerveSubsystem.resetPose(trajectory.getInitialPose())),
+      swerveControllerCommand,
+      new InstantCommand(() -> swerveSubsystem.stopModules())
+    );
   }
 
   public void selectAuto() {
