@@ -19,7 +19,7 @@ public class FieldRotateRight extends CommandBase{
         swerve = newSwerve;
         desiredAngle = newDesiredAngle; 
         turningPID = new PIDController(0.01, 0.01,0.0);
-        // turningPID.enableContinuousInput(-180, 180); // System is circular;  Goes from -Math.PI to 0 to Math.PI
+        turningPID.enableContinuousInput(-180, 180); // System is circular;  Goes from -Math.PI to 0 to Math.PI
 
         addRequirements(swerve);
     }

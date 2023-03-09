@@ -19,7 +19,7 @@ public class FieldRotateLeft extends CommandBase{
         swerve = newSwerve;
         desiredAngle = -newDesiredAngle; 
         turningPID = new PIDController(0.01, 0.01,0.002);
-        // turningPID.enableContinuousInput(-180, 180); // System is circular;  Goes from -Math.PI to 0 to Math.PI
+        turningPID.enableContinuousInput(-180, 180); // System is circular;  Goes from -Math.PI to 0 to Math.PI
 
         addRequirements(swerve);
     }
@@ -44,6 +44,8 @@ public class FieldRotateLeft extends CommandBase{
         }
 
         currentError = desiredAngle - swerve.getYaw();
+        SmartDashboard.putNumber("Err", currentError);
+
 
         if (currentError > 0 && previousError < 0){
             turningPID.reset();
