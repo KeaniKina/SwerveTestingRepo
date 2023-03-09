@@ -27,7 +27,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     private AHRS navx;
 
-    private SwerveDriveOdometry odometry;
+    private SwerveDriveOdometry odometer;
 
     private SwerveModulePosition flModulePosition;
     private SwerveModulePosition frModulePosition;
@@ -65,7 +65,7 @@ public class SwerveSubsystem extends SubsystemBase {
         swerveModulePositions[2] = blModulePosition;
         swerveModulePositions[3] = brModulePosition;
 
-        odometry = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, new Rotation2d(0), swerveModulePositions);
+        odometer = new SwerveDriveOdometry(SwerveConsts.DRIVE_KINEMATICS, new Rotation2d(0), swerveModulePositions);
 
         /* * * Landing Gear * * */
         landinator = new DoubleSolenoid(PneumaticsModuleType.REVPH,
@@ -251,6 +251,7 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("[S] Pitch", getPitch());
         SmartDashboard.putNumber("[S] Timer Class", Timer.getMatchTime());
 
-        odometry.update(getRotation2d(), swerveModulePositions);
+        // this should update the odometer??!?!?!?!
+        odometer.update(getRotation2d(), swerveModulePositions);
     }
 }
