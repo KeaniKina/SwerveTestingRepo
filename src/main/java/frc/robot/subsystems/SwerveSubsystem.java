@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -79,6 +81,15 @@ public class SwerveSubsystem extends SubsystemBase {
 
         landinator.set(Value.kReverse);
 
+    }
+
+    /* * * Keani's Odometer Methods * * */
+    public Pose2d getPose(){
+        return odometer.getPoseMeters();
+    }
+
+    public void resetPose(Pose2d pose){
+        odometer.resetPosition(getRotation2d(), swerveModulePositions, pose);
     }
 
     public void resetEnc() {
@@ -253,8 +264,14 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("[S] Yaw", getYaw());
         SmartDashboard.putNumber("[S] Pitch", getPitch());
         SmartDashboard.putNumber("[S] Timer Class", Timer.getMatchTime());
-
+        
         // this should update the odometer's rotation and module positions!??!?!?!?!
         odometer.update(getRotation2d(), swerveModulePositions);
+
+        /* * * Keani's Displays * * */
+        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+        
+
+
     }
 }
