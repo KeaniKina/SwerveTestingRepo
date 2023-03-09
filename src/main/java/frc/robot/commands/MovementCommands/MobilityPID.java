@@ -42,7 +42,7 @@ public class MobilityPID extends CommandBase {
     SmartDashboard.putString("Current Command", getName());
 
     
-    // TURNING PID
+    /* * * Turning PID * * */
     double turningSpeed = turningPID.calculate(swerve.getYaw(), desiredAngle);
 
     if (turningSpeed > 0.5) {
@@ -63,7 +63,7 @@ public class MobilityPID extends CommandBase {
     SmartDashboard.putNumber("turningSpeed", turningSpeed);
 
 
-    // DRIVING PID
+    /* * * Driving PID * * */
     double drivingSpeed = drivePID.calculate(swerve.getDriveEnc(), desiredEnc);
 
     if (drivingSpeed > 0.5) {
@@ -83,6 +83,8 @@ public class MobilityPID extends CommandBase {
     previousDrivingError = currentDrivingError;
     SmartDashboard.putNumber("drivingSpeed", drivingSpeed);
 
+    /* * * Chassis speeds and module states * * */
+    
     // Setting chassis speeds
     ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(drivingSpeed, 0, turningSpeed, swerve.getRotation2d());
 
