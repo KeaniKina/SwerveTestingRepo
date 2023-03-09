@@ -264,6 +264,18 @@ public class SwerveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("[S] Yaw", getYaw());
         SmartDashboard.putNumber("[S] Pitch", getPitch());
         SmartDashboard.putNumber("[S] Timer Class", Timer.getMatchTime());
+
+        // get the individual module positions
+        flModulePosition = frontLeft.getModulePosition(frontLeft.getDrivePosition(), getRotation2d());
+        frModulePosition = frontRight.getModulePosition(frontRight.getDrivePosition(), getRotation2d());
+        blModulePosition = backLeft.getModulePosition(backLeft.getDrivePosition(), getRotation2d());
+        brModulePosition = backRight.getModulePosition(backRight.getDrivePosition(), getRotation2d());
+
+        // add each module position into an array in the same order they are instantiated
+        swerveModulePositions[0] = flModulePosition;
+        swerveModulePositions[1] = blModulePosition;
+        swerveModulePositions[2] = frModulePosition;
+        swerveModulePositions[3] = brModulePosition;
         
         // this should update the odometer's rotation and module positions!??!?!?!?!
         odometer.update(getRotation2d(), swerveModulePositions);

@@ -1,6 +1,8 @@
 package frc.robot;
 
+import frc.robot.Constants.AutoConsts;
 import frc.robot.Constants.DriverControlConsts;
+import frc.robot.Constants.SwerveConsts;
 import frc.robot.commands.AutonomousCommands.*;
 import frc.robot.commands.ClawCommands.*;
 import frc.robot.commands.CommandGroups.*;
@@ -9,6 +11,15 @@ import frc.robot.commands.ElevatorCommands.*;
 import frc.robot.commands.PivotCommands.*;
 import frc.robot.commands.LED_Commands.*;
 import frc.robot.subsystems.*;
+
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -97,7 +108,20 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
+    //return autoChooser.getSelected();
+
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(AutoConsts.DRIVE_TRANSLATION_SPEED, 0.5).setKinematics(SwerveConsts.DRIVE_KINEMATICS);
+
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(
+        new Translation2d(1, 1),
+        new Translation2d(1, -1)
+      ),
+      new Pose2d(2, 0, new Rotation2d(0)),
+      trajectoryConfig);
+
+    return null;
   }
 
   public void selectAuto() {
